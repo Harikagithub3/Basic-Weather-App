@@ -1,0 +1,30 @@
+import requests
+
+def get_weather(city):
+    api_key = "YOUR_API_KEY"  # Replace with your OpenWeatherMap API key
+    base_url = "http://api.openweathermap.org/data/2.5/weather?"
+    complete_url = f"{base_url}q={city}&appid={api_key}&units=metric"
+    response = requests.get(complete_url)
+    weather_data = response.json()
+        if weather_data['cod'] == 200:
+        temperature = weather_data['main']['temp']
+        humidity = weather_data['main']['humidity']
+        description = weather_data['weather'][0]['description']
+        
+        # Print weather information
+        print(f"Weather in {city.capitalize()}:")
+        print(f"Temperature: {temperature}°C")
+        print(f"Humidity: {humidity}%")
+        print(f"Conditions: {description.capitalize()}")
+    else:
+        # Error message if the city is not found
+        print("City not found. Please check the name and try again.")
+
+# Main function to get user input and display weather data
+def main():
+    print("Welcome to the Command-line Weather App!")
+    city = input("Enter the name of the city: ")
+    get_weather(city)
+
+if __name__ == "__main__":
+    main()
